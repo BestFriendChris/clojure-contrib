@@ -23,3 +23,21 @@
                  (= (example-fn "a" "b") "ab")))
            (-> #'example-fn meta :spec))
          "- is composed of two strings")))
+
+(deftest test-it-acts-like-test-is
+  (is (= (it "does not need a test definition")
+         "- does not need a test definition (Pending)"))
+  (is (= (binding [clojure.test/report
+                   (fn [x]
+                     (do
+                       (assert (= :pass (:type x)))
+                       (assert (= "should be equal" (:message x)))))]
+           (it "should be equal" (= 1 1)))
+         "- should be equal"))
+  (is (= (binding [clojure.test/report
+                   (fn [x]
+                     (do
+                       (assert (= :error (:type x)))
+                       (assert (= "should not be equal" (:message x)))))]
+           (it "should not be equal" (= 1 2)))
+         "- should not be equal")))

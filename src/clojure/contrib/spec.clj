@@ -9,11 +9,17 @@
 ;;  Enhancement to clojure.test to allow for function specifications
 
 (ns clojure.contrib.spec
+  (:require [clojure.test :as test])
   (:use [clojure.contrib.str-utils :only (str-join)]))
 
 (defmacro describe [var-name & args]
-  `(let [description# (str-join "\n" (map (fn [s#] (str "- " s#)) (list ~@args)))]
+  `(let [description# (str-join "\n" (list ~@args))]
      (alter-meta! (var ~var-name) assoc :spec description#)))
 
-(defmacro it [description & assertions]
-  description)
+(defmacro it
+  ([description]
+   `(str "- " ~description " (Pending)"))
+  ([description assertion]
+   `(do
+      (test/is ~assertion ~description)
+      (str "- " ~description))))
