@@ -275,6 +275,16 @@
   ([#^String s] (rmargin s "\\|"))
   ([#^String s m] (replace s (Pattern/compile (str m ".*\\n")) "\n")))
 
+(defn margin
+  "Allows for redefining the margins of a multiline string (default margin marker is |)
+
+  Example usage:
+    (margin \"foo|
+            |bar| <-- Seriously good.
+            |baz\")) => \"foo\\nbar\\nbaz\""
+  ([#^String s] (margin s "\\|"))
+  ([#^String s m] (rmargin (lmargin s m) m)))
+
 ;;; WRAPPERS
 
 ;; The following functions are simple wrappers around java.lang.String

@@ -68,3 +68,15 @@ baz"))
 bar L Everything after this is ignored
 baz" "L"))
       "Can use any regex-able pattern"))
+
+(deftest t-margin
+  (is (= "foo \nbar \nbaz "
+         (s/margin "foo | Do you see what I'm doing here?
+                   |bar | Everything after this is ignored
+                   |baz "))
+      "Defaults to |")
+  (is (= "foo \nbar \nbaz "
+         (s/margin "foo L Do you see what I'm doing here?
+                   Lbar L Everything after this is ignored
+                   Lbaz " "L"))
+      "Can use any regex-able pattern"))
