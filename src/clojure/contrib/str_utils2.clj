@@ -265,6 +265,16 @@
   ([#^String s] (lmargin s "\\|"))
   ([#^String s m] (replace s (Pattern/compile (str "\\n\\s*" m)) "\n")))
 
+(defn rmargin
+  "Allows for ignoring the ending of particular lines (default right margin marker is |)
+
+  Example usage:
+    (rmargin (lmargin \"foo
+                      |bar| Need to comment on this line
+                      |baz\")) => \"foo\\nbar\\nbaz\""
+  ([#^String s] (rmargin s "\\|"))
+  ([#^String s m] (replace s (Pattern/compile (str m ".*\\n")) "\n")))
+
 ;;; WRAPPERS
 
 ;; The following functions are simple wrappers around java.lang.String

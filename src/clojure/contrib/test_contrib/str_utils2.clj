@@ -54,3 +54,17 @@
                     Lbar L
                     Lbaz" "L"))
       "Can use any regex-able pattern"))
+
+(deftest t-rmargin
+  (is (= "foo\nbar \nbaz"
+         (s/rmargin
+"foo
+bar | Everything after this is ignored
+baz"))
+      "Defaults to |")
+  (is (= "foo\nbar \nbaz"
+         (s/rmargin
+"foo
+bar L Everything after this is ignored
+baz" "L"))
+      "Can use any regex-able pattern"))
