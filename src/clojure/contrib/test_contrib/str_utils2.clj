@@ -46,12 +46,12 @@
 (deftest t-lmargin
   (is (= "foo\nbar |\nbaz"
          (s/lmargin "foo
-                    |bar |
+    Comment here -> |bar |
                     |baz"))
       "Defaults to |")
   (is (= "foo\nbar L\nbaz"
          (s/lmargin "foo
-                    Lbar L
+    Comment here -> Lbar L
                     Lbaz" "L"))
       "Can use any regex-able pattern"))
 

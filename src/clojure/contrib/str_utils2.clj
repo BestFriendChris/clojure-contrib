@@ -256,31 +256,21 @@
   (seq (.split #"\r?\n" s)))
 
 (defn lmargin
-  "Allows for indented lines (default left margin marker is |)
-
-  Example usage:
-    (lmargin \"foo
-             |bar
-             |baz\") => \"foo\\nbar\\nbaz\""
+  "Allows for indented lines (default left margin marker is |)"
   ([#^String s] (lmargin s "\\|"))
-  ([#^String s m] (replace s (Pattern/compile (str "\\n\\s*" m)) "\n")))
+  ([#^String s m] (replace s (Pattern/compile (str "\\n.*?" m)) "\n")))
 
 (defn rmargin
-  "Allows for ignoring the ending of particular lines (default right margin marker is |)
-
-  Example usage:
-    (rmargin (lmargin \"foo
-                      |bar| Need to comment on this line
-                      |baz\")) => \"foo\\nbar\\nbaz\""
+  "Allows for ignoring the ending of particular lines (default right margin marker is |)"
   ([#^String s] (rmargin s "\\|"))
-  ([#^String s m] (replace s (Pattern/compile (str m ".*\\n")) "\n")))
+  ([#^String s m] (replace s (Pattern/compile (str m ".*?\\n")) "\n")))
 
 (defn margin
   "Allows for redefining the margins of a multiline string (default margin marker is |)
 
   Example usage:
     (margin \"foo|
-            |bar| <-- Seriously good.
+   Good --> |bar| <-- Seriously good.
             |baz\")) => \"foo\\nbar\\nbaz\""
   ([#^String s] (margin s "\\|"))
   ([#^String s m] (rmargin (lmargin s m) m)))
