@@ -41,4 +41,16 @@
 (deftest t-codepoints
   (is (= (list 102 111 111 65536 98 97 114)
          (s/codepoints "foo\uD800\uDC00bar"))
-      "Handles Unicode supplementary characters")))
+      "Handles Unicode supplementary characters"))
+
+(deftest t-lmargin
+  (is (= "foo\nbar |\nbaz"
+         (s/lmargin "foo
+                    |bar |
+                    |baz"))
+      "Defaults to |")
+  (is (= "foo\nbar L\nbaz"
+         (s/lmargin "foo
+                    Lbar L
+                    Lbaz" "L"))
+      "Can use any regex-able pattern"))

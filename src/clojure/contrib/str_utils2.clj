@@ -255,6 +255,15 @@
   [#^String s]
   (seq (.split #"\r?\n" s)))
 
+(defn lmargin
+  "Allows for indented lines (default left margin marker is |)
+
+  Example usage:
+    (lmargin \"foo
+             |bar
+             |baz\") => \"foo\\nbar\\nbaz\""
+  ([#^String s] (lmargin s "\\|"))
+  ([#^String s m] (replace s (Pattern/compile (str "\\n\\s*" m)) "\n")))
 
 ;;; WRAPPERS
 
